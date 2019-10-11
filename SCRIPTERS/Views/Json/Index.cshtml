@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+
+}
+
+<h2>Import Json File </h2>
+
+<centre>
+    @using (Html.BeginForm("uploadJson", "Json", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <h5 style="color:red">@ViewBag.ErrorMessage</h5>
+        <h5 style="color:green">@ViewBag.message</h5>
+        <input type="file" id="JSONFile" name="filejson" />
+        <p>
+            <input type="Submit" value="Save" />
+        </p>
+        <div>
+            @Html.ActionLink("Back to List", "List", "Customers")
+        </div>
+    }
+
+</centre>

@@ -1,0 +1,138 @@
+﻿@model IEnumerable<SCRIPTERS.Core.Models.Audit>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm("Index", "Help", FormMethod.Post, new { target = "_blank", @title = "Select to get help" }))
+{
+    <p>
+        <input type="hidden" name="action" value="auditTrail" />
+        <button type="submit" style="background:none;border:none;text-decoration:none;cursor:pointer;color:#7985d4">Help</button>
+    </p>
+}
+
+
+
+
+
+
+
+
+
+@*@model IEnumerable<SCRIPTERS.Core.Models.Inventory>*@
+
+@{
+    ViewBag.Title = "List";
+}
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label col-md-2">Audit </label>
+        @*  <div class="col-md-10">@Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-sm btn-primary" })</div>*@
+    </div>
+</div>
+<hr />
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-condensed table-striped table-responsive List-table">
+            <thead>
+                <tr>
+                    <th>
+                        Transaction Date
+                    </th>
+                    <th>
+                        Transaction Time
+                    </th>
+                    <th>
+                        Transaction User
+                    </th>
+                    <th>
+                        Transaction Type
+                    </th>
+                    <th>
+                        Transaction Details
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TransactionDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TransactionTime)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.User)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TransactionType)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TransactionDetails)
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@Html.Hidden("DeleteId")
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                <h3 class="modal-title">Confirm to Delete</h3>
+            </div>
+            <div class="modal-body">
+                <h5>Are you sure you want to Delete this Item Category ?</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <input type="button" class="btn btn-danger" value="Confirm Delete" id="btnConfirmDelete" />
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        var GetDeleteId = function (Id) {
+            $("#DeleteId").val(Id);
+            $("#myModal").modal("show");
+        }
+        $("#btnConfirmDelete").on("click", function () {
+            var deleteId = $("#DeleteId").val();
+            $.ajax({
+                url: "/Inventory/Delete",
+                data: { id: deleteId },
+                method: "post",
+                success: function (response) {
+                    if (response == 1) {
+                        $("#myModal").modal("hide");
+                        $("#DelRow_" + deleteId).remove();
+                    }
+                }
+            })
+        })
+    </script>
+}

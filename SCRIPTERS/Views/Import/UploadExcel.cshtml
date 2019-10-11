@@ -1,0 +1,13 @@
+﻿
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("UploadExcel", "Import", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return myFunction()" } ))
+{
+
+}
+<h1 style="color:red">File Successfully Upload. Relad Customer List</h1> 
+
+<a href="/User/DownloadExcel/"><img src="~/excel.ico" width="25" height="25" title="Download Excel format" alt="excel" /></a>
+    

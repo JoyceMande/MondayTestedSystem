@@ -1,0 +1,82 @@
+﻿@model SCRIPTERS.Core.Models.Operation.Order
+
+    @{
+        ViewBag.Title = "DetailsPdf";
+        Layout = "~/Views/Shared/_LayoutPdf.cshtml";
+    }
+    <div class="row">
+        <div class="col-md-12">
+
+            <h4>Order Result</h4>
+            <hr />
+            <table>
+                <tr>
+                    <td> Order Number :</td>
+                    <td>&nbsp;@Html.DisplayFor(model => model.OrderNumber)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.Outlet.Name) :</td>
+                    <td>&nbsp; @Html.DisplayFor(model => model.Outlet.Name)</td>
+                </tr>
+                <tr>
+                    <td> Order By :</td>
+                    <td>&nbsp;@Html.DisplayFor(model => model.Employee.Name)</td>
+                </tr>
+
+                <tr>
+                    <td>Supplier Name :</td>
+                    <td>&nbsp; @Html.DisplayFor(model => model.Supplier.Name)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.OrderDate) :</td>
+                    <td>&nbsp;@Html.DisplayFor(model => model.OrderDate)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.Remarks) :</td>
+                    <td>&nbsp;@Html.DisplayFor(model => model.Remarks)</td>
+                </tr>
+            </table>
+            <br />
+            <br />
+            <br />
+            <h4>Item Details</h4>
+            <table class="table table-bordered table-condensed table-hover table-responsive table-striped">
+                <tr style="background-color:cornflowerblue; color:white;">
+                    <th>Sl</th>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Line Price</th>
+                </tr>
+                @{ int sl = 1;}
+                @foreach (var item in Model.OrderDetail)
+                {
+                    var linePrice = item.Price * item.Quantity;
+                    <tr>
+                        <td>@sl</td>
+                        <td>@item.Item.Name</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Price</td>
+                        <td>@linePrice</td>
+                    </tr>
+                    sl++;
+                }
+            </table>
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="col-md-4" style="float:right">
+            <table>
+                <tr>
+                    <td> @Html.DisplayNameFor(model => model.Total) :</td>
+                    <td>&nbsp;@Html.DisplayFor(model => model.Total)</td>
+                </tr>
+                <tr>
+                    <td> @Html.DisplayNameFor(model => model.DueAmount) :</td>
+                    <td>&nbsp; @Html.DisplayFor(model => model.DueAmount)</td>
+                </tr>
+            </table>
+        </div>
+    </div>

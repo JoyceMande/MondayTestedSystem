@@ -1,0 +1,147 @@
+﻿@using Microsoft.Owin.Security
+@model SCRIPTERS.Models.RegisterViewModel
+
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>The Book Shop | Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    @* <link rel="icon" type="image/png" href="~/Content/images/icons/favicon.ico" />*@
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Content/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Content/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Content/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Content/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Content/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Content/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Content/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Content/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/util.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/main.css">
+    <!--===============================================================================================-->
+</head>
+<body>
+
+    <div class="limiter">
+        <div class="container-login100" style="background-image: url('images/bg-01.jpg');">
+            <div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
+
+
+
+                <section id="loginForm">
+                    @using (Html.BeginForm("Register", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "login100-form validate-form flex-sb flex-w", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <span class="login100-form-title p-b-53">
+                           Register
+                        </span>
+                        <hr/>
+                       
+
+                      
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div class="p-t-31 p-b-9">
+                            <span class="txt1">
+                                @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                            </span>
+                        </div>
+                        <div class="wrap-input100 validate-input" data-validate="Email is required">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "input100" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                       
+                            <span class="focus-input100"></span>
+                        </div>
+
+                        <div class="p-t-31 p-b-9">
+                            <span class="txt1">
+                                @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                            </span>
+                        </div>
+                     
+                        <div class="wrap-input100 validate-input" data-validate="Password is required">
+                            @Html.PasswordFor(m => m.Password, new { @class = "input100" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        
+                            <span class="focus-input100"></span>
+                        </div>
+
+                        <div class="p-t-31 p-b-9">
+                            <span class="txt1">
+                                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+                            </span>
+                        </div>
+                        <div class="wrap-input100 validate-input" data-validate="Confirm password is required">
+                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "input100" })
+                            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                        
+                            <span class="focus-input100"></span>
+                        </div>
+
+
+
+                        <div class="container-login100-form-btn m-t-17">
+                            <button type="submit" class="login100-form-btn">
+                                Register
+                            </button>
+                        </div>
+
+                        <div class="w-full text-center p-t-55">
+                            <span class="txt2">
+                                Already registered?
+                            </span>
+
+                            <a href="@Url.Action("Login","Account")" class="txt2 bo1">
+                                Log in
+                            </a>
+                        </div>
+
+
+                      
+
+                     
+                    }
+                </section>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="dropDownSelect1"></div>
+
+    <!--===============================================================================================-->
+    <script src="~/Content/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Content/vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Content/vendor/bootstrap/js/popper.js"></script>
+    <script src="~/Content/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Content/vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Content/vendor/daterangepicker/moment.min.js"></script>
+    <script src="~/Content/vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Content/vendor/countdowntime/countdowntime.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Content/js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,125 @@
+﻿@model SCRIPTERS.Core.Models.Operation.Purchase
+@{
+    ViewBag.Title = "Details";
+    if (User.IsInRole("Manager"))
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    if (User.IsInRole("Employee"))
+    {
+        Layout = "~/Views/Shared/_Layout2.cshtml";
+    }
+}
+<div class="row">
+    <div class="col-md-offset-1">
+        <div class="col-md-11">
+            <table>
+                <tr>
+                    <td><h4>Purchase Result</h4></td>
+                    <td>&nbsp; @Html.ActionLink("Download Pdf", "ExportPdf", "Purchases", new { id = Model.Id }, new { @class = "btn btn-info btn-sm", target = "_blank" }) </td>
+                </tr>
+            </table>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    Purchase Number
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PurchaseNumber)
+                </dd>
+                <dt>
+                    Purchase By
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Employee.Name)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Outlet.Name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Outlet.Name)
+                </dd>
+
+                <dt>
+                    Supplier Name
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Supplier.Name)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.PurchaseDate)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PurchaseDate)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Remarks)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Remarks)
+                </dd>
+            </dl>
+            <div class="col-md-12">
+                <h4>Item Details</h4>
+                <table class="table table-bordered table-responsive table-hover table-striped table-condensed table">
+                    <tr style="background-color:cornflowerblue; color:white">
+                        <th>Sl</th>
+                        <th>Item</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Line Price</th>
+                    </tr>
+                    @{ int sl = 1;}
+                    @foreach (var item in Model.PurchaseDetail)
+                    {
+                        var linePrice = item.Price * item.Quantity;
+                        <tr>
+                            <td>@sl</td>
+                            <td>@item.Item.Name</td>
+                            <td>@item.Quantity</td>
+                            <td>@item.Price</td>
+                            <td>@linePrice</td>
+                        </tr>
+                        sl++;
+                    }
+                </table>
+            </div>
+            <div class="col-md-offset-8 col-md-4">
+                <dl class="dl-horizontal">
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Total)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Total)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.DueAmount)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.DueAmount)
+                    </dd>
+                </dl>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="col-md-offset-8 col-md-4">
+    @Html.ActionLink("Create New", "Create", "Purchases", new { @class = "btn btn-primary" })
+    @Html.ActionLink("Back to List", "List", "Purchases", new { @Class = "btn btn-primary" })
+  @*  @Html.ActionLink("Go to Reports", "PurchaseReport", "Reports", null, new { @Class = "btn btn-info" })*@
+</div>

@@ -1,0 +1,100 @@
+﻿@using System.Globalization
+@model IEnumerable<SCRIPTERS.Core.Models.Operation.InventorySale>
+
+@{
+    ViewBag.Title = "List";
+    if (User.IsInRole("Manager"))
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    if (User.IsInRole("Employee"))
+    {
+        Layout = "~/Views/Shared/_Layout2.cshtml";
+    }
+}
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label col-md-2">List of Sales</label>
+        <div class="col-md-10">@Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-sm btn-primary" })</div>
+    </div>
+</div>
+<hr />
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-condensed table-striped table-responsive List-table ">
+            <thead>
+                <tr>
+                    <th>
+                        Sale Number
+                    </th>
+                    <th>
+                        Outlet Name
+                    </th>
+                    <th>
+                        Employee Name
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SaleDate)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.CusName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CusContractNo)
+                    </th>
+                    <th>
+                        Total (Exc Tax)
+                    </th>
+
+                    <th>
+                        Total (Inc Tax)
+                    </th>
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    DateTime itemDate = item.SaleDate;
+                    var convertedDate = itemDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SaleNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Outlet.Name)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Employee.Name)
+                        </td>
+                        <td>
+                            @convertedDate
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CusName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CusContractNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SubTotal)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Total)
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-sm btn-info" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

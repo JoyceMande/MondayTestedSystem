@@ -1,0 +1,19 @@
+﻿@*@model IEnumerable<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>*@
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Asign Role To User</h2>
+
+
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        @Html.Label("Select Use Type", new { @class= "col-md-2 control-label"})
+    </div>
+    <div class="col-md-10">
+        @Html.DropDownList("UserName");
+    </div>
+    <input type="submit" value="Assign  Role" />
+}

@@ -1,0 +1,142 @@
+﻿@model IEnumerable<SCRIPTERS.Core.Models.Operation.Purchase>
+
+@{
+    ViewBag.Title = "List";
+    if (User.IsInRole("Manager"))
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    if (User.IsInRole("Employee"))
+    {
+        Layout = "~/Views/Shared/_Layout2.cshtml";
+    }
+}
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label col-md-2">List Of Purchases</label>
+        <div class="col-md-10">@Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-sm btn-primary" })</div>
+    </div>
+</div>
+<hr />
+<br />
+<div class="row">
+    <div class="col-md-12">
+
+        <table class="table table-bordered table-condensed table-striped table-responsive List-table">
+            <thead>
+                <tr>
+                    <th>
+                        Purchase Number
+                    </th>
+                    <th>
+                        Outlet Name
+                    </th>
+                    <th>
+                        Seller Name
+                    </th>
+                    <th>
+                        Employee Name
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PurchaseDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Remarks)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Total)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DueAmount)
+                    </th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr id="DelRow_@item.Id">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PurchaseNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Outlet.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Supplier.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Employee.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PurchaseDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Remarks)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Total)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DueAmount)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-sm btn-info" })
+                            <a class="btn btn-sm btn-danger delete_link" href="#" onclick="GetDeleteId(@item.Id)">Remove</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@Html.Hidden("DeleteId")
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                <h3 class="modal-title">Confirm to Remove</h3>
+            </div>
+            <div class="modal-body">
+                <h5>Are you sure you want to Remove this Purchase</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <input type="button" class="btn btn-danger" value="Confirm Remove" id="btnConfirmDelete" />
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        var GetDeleteId = function (Id) {
+            $("#DeleteId").val(Id);
+            $("#myModal").modal("show");
+        }
+        $("#btnConfirmDelete").on("click", function () {
+            var deleteId = $("#DeleteId").val();
+            $.ajax({
+                url: "/Purchases/Delete",
+                data: { id: deleteId },
+                method: "post",
+                success: function (response) {
+                    if (response == 1) {
+                        $("#myModal").modal("hide");
+                        $("#DelRow_" + deleteId).remove();
+                    }
+                }
+            })
+        })
+    </script>
+}
